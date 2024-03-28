@@ -5,7 +5,7 @@
 
 ## Using
 
-If `my_address_file_geocoded.csv` is a file in the current working directory with coordinate columns named `lat` and `lon`, then the [DeGAUSS command](https://degauss.org/using_degauss.html#DeGAUSS_Commands):
+If `loyalty_degauss.csv` is a file in the current working directory with coordinate columns named `lat` and `lon`, then the [DeGAUSS command](https://degauss.org/using_degauss.html#DeGAUSS_Commands):
 
 ```sh
 docker run --rm -v $PWD:/tmp ghcr.io/degauss-org/daymet:0.1.0 my_address_file_geocoded.csv
@@ -13,13 +13,23 @@ docker run --rm -v $PWD:/tmp ghcr.io/degauss-org/daymet:0.1.0 my_address_file_ge
 
 will produce `my_address_file_geocoded_daymet_0.1.0.csv` with added columns:
 
-- **`this_geomarker`**: a definition of this geomarker
-- **`that_geomarker`**: a definition of that geomarker
+- **`tmax`**: maximum temperature
+- **`tmin`**: minimum temperature
+- **`srad`**: solar radiation
+- **`vp`**: vapor pressure
+- **`swe`**: snow water equivalent
+- **`prcp`**: precipitation
+- **`dayl`**: day length
 
 ### Optional Argument
 
-- If this DeGAUSS container takes an optional argument, describe its usage and effects here.
-- Be sure to also update the example output file name with the argument value.
+- Optional arguments include:
+- vars: daymet variables (any of: <tmax, tmin, srad, vp, swe, prcp, dayl> separated by comma)
+- min_lon: minimum longitude (numeric)
+- max_lon: maximum longitude (numeric)
+- min_lat: minimum_latitude (numeric)
+- max_lat: maximum latitude (numeric)
+- region: daymet region ('na' for North America, 'hi' for Hawaii, 'pr' for Puerto Rico)
 
 ## Geomarker Methods
 
