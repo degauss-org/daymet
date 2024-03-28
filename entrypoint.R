@@ -21,7 +21,7 @@ doc <- '
       Options:
       -h --help   Show this screen
       filename  name of csv file
-      vars    tmax, tmin, srad, vp, swe, prcp, dayl, capricorn, or none (see readme for more info)
+      vars    tmax, tmin, srad, vp, swe, prcp, dayl, or capricorn (see readme for more info)
       min_lon minimum longitude
       max_lon maximum longitude
       min_lat minimum latitude
@@ -32,45 +32,45 @@ opt <- docopt::docopt(doc)
 
 if (is.null(opt$vars)) {
   opt$vars <- "tmax, tmin, srad, vp, swe, prcp, dayl"
-  cli::cli_alert_warning("Blank argument for Daymet variable selection. Will return all Daymet variables. Please see {.url https://degauss.org/daymet/} for more information about the Daymet variable argument.")
+  cli::cli_alert_warning("Blank argument for Daymet variable selection. Will return all Daymet variables. Please see {.url https://degauss.org/daymet/} for more information.")
 }
 
 day_var <- str_remove_all(opt$vars, " ") 
 day_var <- str_split(day_var, ",", simplify = TRUE)
 
-if (! all(day_var %in% c("tmax", "tmin", "srad", "vp", "swe", "prcp", "dayl", "capricorn", "none"))) {
+if (! all(day_var %in% c("tmax", "tmin", "srad", "vp", "swe", "prcp", "dayl", "capricorn"))) {
   opt$vars <- "tmax, tmin, srad, vp, swe, prcp, dayl"
-  cli::cli_alert_warning("Invalid argument for Daymet variable selection. Will return all Daymet variables. Please see {.url https://degauss.org/daymet/} for more information about the Daymet variable argument.")
+  cli::cli_alert_warning("Invalid argument for Daymet variable selection. Will return all Daymet variables. Please see {.url https://degauss.org/daymet/} for more information.")
 }
 
 if (is.null(opt$min_lon)) {
   opt$min_lon <- 0
-  cli::cli_alert_warning("Blank argument for minimum longitude. Will use minimum longitude coordinates from address file. Please see {.url https://degauss.org/daymet/} for more information about the Daymet variable argument.")
+  cli::cli_alert_warning("Blank argument for minimum longitude. Will use minimum longitude coordinates from address file. Please see {.url https://degauss.org/daymet/} for more information.")
 }
 
 if (is.null(opt$max_lon)) {
   opt$max_lon <- 0
-  cli::cli_alert_warning("Blank argument for maximum longitude. Will use maximum longitude coordinates from address file. Please see {.url https://degauss.org/daymet/} for more information about the Daymet variable argument.")
+  cli::cli_alert_warning("Blank argument for maximum longitude. Will use maximum longitude coordinates from address file. Please see {.url https://degauss.org/daymet/} for more information.")
 }
 
 if (is.null(opt$min_lat)) {
   opt$min_lat <- 0
-  cli::cli_alert_warning("Blank argument for minimum latitude. Will use minimum latitude coordinates from address file. Please see {.url https://degauss.org/daymet/} for more information about the Daymet variable argument.")
+  cli::cli_alert_warning("Blank argument for minimum latitude. Will use minimum latitude coordinates from address file. Please see {.url https://degauss.org/daymet/} for more information.")
 }
 
 if (is.null(opt$max_lat)) {
   opt$max_lat <- 0
-  cli::cli_alert_warning("Blank argument for maximum latitude. Will use maximum latitude coordinates from address file. Please see {.url https://degauss.org/daymet/} for more information about the Daymet variable argument.")
+  cli::cli_alert_warning("Blank argument for maximum latitude. Will use maximum latitude coordinates from address file. Please see {.url https://degauss.org/daymet/} for more information.")
 }
 
 if (is.null(opt$region)) {
   opt$region <- "na"
-  cli::cli_alert_warning("Blank argument for region. Will use North America as default. Please see {.url https://degauss.org/daymet/} for more information about the Daymet variable argument.")
+  cli::cli_alert_warning("Blank argument for region. Will use North America as default. Please see {.url https://degauss.org/daymet/} for more information.")
 }
 
 if (! opt$region %in% c("na", "hi", "pr")) {
   opt$region <- "na"
-  cli::cli_alert_warning("Invalid argument for Daymet region. Will use North America as default. Please see {.url https://degauss.org/daymet/} for more information about the Daymet variable argument.")
+  cli::cli_alert_warning("Invalid argument for Daymet region. Will use North America as default. Please see {.url https://degauss.org/daymet/} for more information.")
 }
 
 if (opt$vars %in% c("capricorn")) {
@@ -80,7 +80,7 @@ if (opt$vars %in% c("capricorn")) {
     opt$min_lat <- 41.470117
     opt$max_lat <- 42.154247
     opt$region <- "na"
-    cli::cli_alert_warning("Returning tmax and tmin for lat/lon coordinates of Cook County. Please see {.url https://degauss.org/daymet/} for more information about the Daymet variable argument.")
+    cli::cli_alert_warning("Returning tmax and tmin for lat/lon coordinates of Cook County. Please see {.url https://degauss.org/daymet/} for more information.")
 }
 
 # Writing functions
