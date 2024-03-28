@@ -24,12 +24,12 @@ will produce `loyalty_degauss_daymet_0.1.0.csv` with added columns:
 ### Optional Argument
 
 - Optional arguments include:
-- **'vars'**: daymet variables (any of: <tmax, tmin, srad, vp, swe, prcp, dayl> separated by comma)
-- **'min_lon'**: minimum longitude (numeric)
-- **'max_lon'**: maximum longitude (numeric)
-- **'min_lat'**: minimum_latitude (numeric)
-- **'max_lat'**: maximum latitude (numeric)
-- **'region'**: daymet region ('na' for North America, 'hi' for Hawaii, 'pr' for Puerto Rico)
+- **`vars`**: daymet variables (any of: <tmax, tmin, srad, vp, swe, prcp, dayl> separated by comma)
+- **`min_lon`**: minimum longitude (numeric)
+- **`max_lon`**: maximum longitude (numeric)
+- **`min_lat`**: minimum_latitude (numeric)
+- **`max_lat`**: maximum latitude (numeric)
+- **`region`**: daymet region ('na' for North America, 'hi' for Hawaii, 'pr' for Puerto Rico)
 
 ## Geomarker Methods
 
