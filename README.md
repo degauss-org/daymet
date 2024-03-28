@@ -23,13 +23,13 @@ will produce `my_addresses_daymet_0.1.0.csv` with added columns:
 
 - **`tmax`**: maximum temperature
 - **`tmin`**: minimum temperature
-- **`srad`**: solar radiation
+- **`srad`**: shortwave radiation
 - **`vp`**: vapor pressure
 - **`swe`**: snow water equivalent
 - **`prcp`**: precipitation
 - **`dayl`**: day length
 
-### Optional Argument
+### Optional Arguments
 
 - Optional arguments include:
 - **`vars`**: [Optional] Comma-separated string of Daymet variables: "tmax,tmin,srad,vp,swe,prcp,dayl". Default is to download and link all Daymet variables.
@@ -38,6 +38,14 @@ will produce `my_addresses_daymet_0.1.0.csv` with added columns:
 - **`min_lat`**: [Optional] Minimum latitude (in decimal degrees) of bounding box for Daymet data download. Default is to infer bounding box from address coordinates.
 - **`max_lat`**: [Optional] Maximum latitude (in decimal degrees) of bounding box for Daymet data download. Default is to infer bounding box from address coordinates.
 - **`region`**: [Optional] Daymet spatial region ("na" for continental North America, "hi" for Hawaii, or "pr" for Puerto Rico). Default is continental North America.
+
+An example DeGAUSS command with all optional arguments used would be:
+
+```sh
+docker run --rm -v $PWD:/tmp ghcr.io/degauss-org/daymet:0.1.0 my_addresses.csv tmax,vp,prcp -88.263390 -87.525706 41.470117 42.154247 na
+```
+
+which will return maximum temperature, vapor pressure, and precipitation for observations within a boundary box of Cook County, IL.
 
 ## Geomarker Methods
 
