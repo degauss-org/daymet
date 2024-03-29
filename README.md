@@ -29,9 +29,10 @@ will produce `my_addresses_daymet_0.1.0.csv` with added columns:
 - **`prcp`**: precipitation
 - **`dayl`**: day length
 
+Other columns may be present in the input `my_addresses.csv` file, and these other columns will be linked in and included in the output `my_addresses_daymet_0.1.0.csv` file.
+
 ### Optional Arguments
 
-- Optional arguments include:
 - **`vars`**: [Optional] Comma-separated string of Daymet variables: "tmax,tmin,srad,vp,swe,prcp,dayl". Default is to download and link all Daymet variables.
 - **`min_lon`**: [Optional] Minimum longitude (in decimal degrees) of bounding box for Daymet data download. Default is to infer bounding box from address coordinates.
 - **`max_lon`**: [Optional] Maximum longitude (in decimal degrees) of bounding box for Daymet data download. Default is to infer bounding box from address coordinates.
@@ -45,16 +46,20 @@ An example DeGAUSS command with all optional arguments used would be:
 docker run --rm -v $PWD:/tmp ghcr.io/degauss-org/daymet:0.1.0 my_addresses.csv tmax,vp,prcp -88.263390 -87.525706 41.470117 42.154247 na
 ```
 
-which will return maximum temperature, vapor pressure, and precipitation for observations within a boundary box of Cook County, IL.
+which will return maximum temperature, vapor pressure, and precipitation for observations within a bounding box of Cook County, IL. It is important to specify bounding box coordinates in the order of: `min_lon`, `max_lon`, `min_lat`, `max_lat`.
 
 ## Geomarker Methods
 
-- If needed, put details here about the methods and assumptions used in the geomarker assessment process.
+Daymet data on a specified date is linked to coordinate data within the `my_addresses.csv` file by matching on the Daymet 1 km x 1 km raster cell number.
 
 ## Geomarker Data
 
-- List how geomarker was created, ideally including any scripts within the repo used to do so or linking to an external repository
-- If applicable, list where geomarker data is stored in S3 using a hyperlink like: [`s3://path/to/daymet.rds`](https://geomarker.s3.us-east-2.amazonaws.com/path/to/daymet.rds)
+- Environmental data is downloaded from [Daymet](https://daymet.ornl.gov/).
+- The R code that links the environmental data to the input coordinates is within `entrypoint.R`.
+
+## Warning
+
+If the bounding box for Daymet data download is inferred from address coordinates, then the size of the Daymet data download may be quite large if the address coordinates are very spread out. If a wide spread of coordinates is desired, then it may be best to stratify your input dataset to coordinates within separate geographic regions.
 
 ## DeGAUSS Details
 
