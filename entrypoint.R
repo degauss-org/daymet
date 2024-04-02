@@ -21,66 +21,66 @@ doc <- '
       Options:
       -h --help   Show this screen
       filename  name of csv file
-      vars    tmax, tmin, srad, vp, swe, prcp, dayl, capricorn, or none (see readme for more info)
+      vars    tmax, tmin, srad, vp, swe, prcp, dayl, or capricorn (see readme for more info)
       min_lon minimum longitude
       max_lon maximum longitude
       min_lat minimum latitude
       max_lat maximum latitude
-      region daymet region
+      region  daymet region
       '
 opt <- docopt::docopt(doc)
 
 if (is.null(opt$vars)) {
   opt$vars <- "tmax, tmin, srad, vp, swe, prcp, dayl"
-  cli::cli_alert_warning("Blank argument for Daymet variable selection. Will return all Daymet variables. Please see {.url https://degauss.org/daymet/} for more information about the Daymet variable argument.")
+  cli::cli_alert_warning("Blank argument for Daymet variable selection. Will return all Daymet variables. Please see {.url https://degauss.org/daymet/} for more information.")
 }
 
 day_var <- str_remove_all(opt$vars, " ") 
 day_var <- str_split(day_var, ",", simplify = TRUE)
 
-if (! all(day_var %in% c("tmax", "tmin", "srad", "vp", "swe", "prcp", "dayl", "capricorn", "none"))) {
+if (! all(day_var %in% c("tmax", "tmin", "srad", "vp", "swe", "prcp", "dayl", "capricorn"))) {
   opt$vars <- "tmax, tmin, srad, vp, swe, prcp, dayl"
-  cli::cli_alert_warning("Invalid argument for Daymet variable selection. Will return all Daymet variables. Please see {.url https://degauss.org/daymet/} for more information about the Daymet variable argument.")
+  cli::cli_alert_warning("Invalid argument for Daymet variable selection. Will return all Daymet variables. Please see {.url https://degauss.org/daymet/} for more information.")
 }
 
 if (is.null(opt$min_lon)) {
   opt$min_lon <- 0
-  cli::cli_alert_warning("Blank argument for minimum longitude. Will use minimum longitude coordinates from address file. Please see {.url https://degauss.org/daymet/} for more information about the Daymet variable argument.")
+  cli::cli_alert_warning("Blank argument for minimum longitude. Will use minimum longitude coordinates from address file. Please see {.url https://degauss.org/daymet/} for more information.")
 }
 
 if (is.null(opt$max_lon)) {
   opt$max_lon <- 0
-  cli::cli_alert_warning("Blank argument for maximum longitude. Will use maximum longitude coordinates from address file. Please see {.url https://degauss.org/daymet/} for more information about the Daymet variable argument.")
+  cli::cli_alert_warning("Blank argument for maximum longitude. Will use maximum longitude coordinates from address file. Please see {.url https://degauss.org/daymet/} for more information.")
 }
 
 if (is.null(opt$min_lat)) {
   opt$min_lat <- 0
-  cli::cli_alert_warning("Blank argument for minimum latitude. Will use minimum latitude coordinates from address file. Please see {.url https://degauss.org/daymet/} for more information about the Daymet variable argument.")
+  cli::cli_alert_warning("Blank argument for minimum latitude. Will use minimum latitude coordinates from address file. Please see {.url https://degauss.org/daymet/} for more information.")
 }
 
 if (is.null(opt$max_lat)) {
   opt$max_lat <- 0
-  cli::cli_alert_warning("Blank argument for maximum latitude. Will use maximum latitude coordinates from address file. Please see {.url https://degauss.org/daymet/} for more information about the Daymet variable argument.")
+  cli::cli_alert_warning("Blank argument for maximum latitude. Will use maximum latitude coordinates from address file. Please see {.url https://degauss.org/daymet/} for more information.")
 }
 
 if (is.null(opt$region)) {
   opt$region <- "na"
-  cli::cli_alert_warning("Blank argument for region. Will use North America as default. Please see {.url https://degauss.org/daymet/} for more information about the Daymet variable argument.")
+  cli::cli_alert_warning("Blank argument for region. Will use North America as default. Please see {.url https://degauss.org/daymet/} for more information.")
 }
 
 if (! opt$region %in% c("na", "hi", "pr")) {
   opt$region <- "na"
-  cli::cli_alert_warning("Invalid argument for Daymet region. Will use North America as default. Please see {.url https://degauss.org/daymet/} for more information about the Daymet variable argument.")
+  cli::cli_alert_warning("Invalid argument for Daymet region. Will use North America as default. Please see {.url https://degauss.org/daymet/} for more information.")
 }
 
 if (opt$vars %in% c("capricorn")) {
-    opt$vars <- "tmax, tmin"
-    opt$min_lon <- -88.263390
-    opt$max_lon <- -87.525706
-    opt$min_lat <- 41.470117
-    opt$max_lat <- 42.154247
-    opt$region <- "na"
-    cli::cli_alert_warning("Returning tmax and tmin for lat/lon coordinates of Cook County. Please see {.url https://degauss.org/daymet/} for more information about the Daymet variable argument.")
+  opt$vars <- "tmax, tmin"
+  opt$min_lon <- -88.263390
+  opt$max_lon <- -87.525706
+  opt$min_lat <- 41.470117
+  opt$max_lat <- 42.154247
+  opt$region <- "na"
+  cli::cli_alert_warning("Returning tmax and tmin for lat/lon coordinates of Cook County. Please see {.url https://degauss.org/daymet/} for more information.")
 }
 
 # Writing functions
@@ -183,31 +183,31 @@ import_data <- function(.csv_filename = opt$filename, .min_lon = opt$min_lon, .m
     print(w)
     stop(call. = FALSE)
   })
-  # Filtering out any rows in the input data where the start_date is before 1980 if region is "na" or "hi", or before 1950 if region is "pr"
-  if (.region == "na" | .region == "hi") {
-    input_data <- input_data %>%
-      filter(!(start_date < as_date("1980-01-01")))
-  } else {
-    input_data <- input_data %>%
-      filter(!(start_date < as_date("1950-01-01")))
-  }
-  # Throwing an error if no observations are remaining
-  if (nrow(input_data) == 0) {
-    stop(call. = FALSE, 'Zero observations where the start_date is within or after the first year of available Daymet data.')
-  }
-  # Filtering out any rows in the input data where the end_date year is equal to the current date year
-  input_data <- input_data %>%
-    filter(!(year(end_date) == year(Sys.Date())))
-  # Throwing an error if no observations are remaining
-  if (nrow(input_data) == 0) {
-    stop(call. = FALSE, 'Zero observations where the end_date is within or before the last year of available Daymet data.')
-  }
   # Inferring the start and end year of Daymet data to download from start_date and end_date
   year_start <- year(min(input_data$start_date))
   year_end <- year(max(input_data$end_date))
   # Expanding the dates between start_date and end_date into a daily series
   input_data <- expand_dates(input_data, by = "day") %>%
     select(-start_date, -end_date)
+  # Filtering out any rows in the input data where the date is before 1980 if region is "na" or "hi", or before 1950 if region is "pr"
+  if (.region == "na" | .region == "hi") {
+    input_data <- input_data %>%
+      filter(!(date < as_date("1980-01-01")))
+  } else {
+    input_data <- input_data %>%
+      filter(!(date < as_date("1950-01-01")))
+  }
+  # Throwing an error if no observations are remaining
+  if (nrow(input_data) == 0) {
+    stop(call. = FALSE, 'Zero observations where the start_date is within or after the first year of available Daymet data.')
+  }
+  # Filtering out any rows in the input data where the date year is equal to the current date year
+  input_data <- input_data %>%
+    filter(!(year(date) == year(Sys.Date())))
+  # Throwing an error if no observations are remaining
+  if (nrow(input_data) == 0) {
+    stop(call. = FALSE, 'Zero observations where the end_date is within or before the last year of available Daymet data.')
+  }
   # Removing any columns in the input data where everything is NA
   input_data <- input_data %>%
     select_if(~ !all(is.na(.))) 
