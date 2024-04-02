@@ -63,4 +63,5 @@ If the bounding box for Daymet data download is inferred from address coordinate
 
 ## DeGAUSS Details
 
+The Daymet DeGAUSS package was created by Ben Barrett and Peter Graffy.
 For detailed documentation on DeGAUSS, including general usage and installation, please see the [DeGAUSS homepage](https://degauss.org).
