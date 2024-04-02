@@ -51,6 +51,7 @@ which will return maximum temperature, vapor pressure, and precipitation for obs
 ## Geomarker Methods
 
 Daymet data on a specified date is linked to coordinate data within the `my_addresses.csv` file by matching on the Daymet 1 km x 1 km raster cell number.
+If boundary box coordinate data is not supplied in the optional arguments, they will be inferred from the .csv file with an added 0.1 degree latitude and longitude buffer to the outermost points to enhance data privacy.
 
 ## Geomarker Data
 
