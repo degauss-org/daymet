@@ -16,7 +16,7 @@ Note: The Daymet calendar is based on a standard calendar year. All Daymet years
 If `my_addresses.csv` is a file in the current working directory with ID column `id`, start and end date columns `start_date` and `end_date`, and coordinate columns named `lat` and `lon`, then the [DeGAUSS command](https://degauss.org/using_degauss.html#DeGAUSS_Commands):
 
 ```sh
-docker run --rm -v $PWD:/tmp ghcr.io/degauss-org/daymet:0.1.0 my_addresses.csv
+docker run --rm -v $PWD:/tmp ghcr.io/degauss-org/daymet:0.1.0 loyalty_degauss.csv
 ```
 
 will produce `my_addresses_daymet_0.1.0.csv` with added columns:
