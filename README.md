@@ -33,12 +33,12 @@ Other columns may be present in the input `my_addresses.csv` file, and these oth
 
 ### Optional Arguments
 
-- **`vars`**: [Optional] Comma-separated string of Daymet variables: "tmax,tmin,srad,vp,swe,prcp,dayl". Default is to download and link all Daymet variables.
-- **`min_lon`**: [Optional] Minimum longitude (in decimal degrees) of bounding box for Daymet data download. Default is to infer bounding box from address coordinates.
-- **`max_lon`**: [Optional] Maximum longitude (in decimal degrees) of bounding box for Daymet data download. Default is to infer bounding box from address coordinates.
-- **`min_lat`**: [Optional] Minimum latitude (in decimal degrees) of bounding box for Daymet data download. Default is to infer bounding box from address coordinates.
-- **`max_lat`**: [Optional] Maximum latitude (in decimal degrees) of bounding box for Daymet data download. Default is to infer bounding box from address coordinates.
-- **`region`**: [Optional] Daymet spatial region ("na" for continental North America, "hi" for Hawaii, or "pr" for Puerto Rico). Default is continental North America.
+- **`vars`**: Comma-separated string of Daymet variables: Any combination of "tmax,tmin,srad,vp,swe,prcp,dayl" (quotes are optional). Default is to download and link all Daymet variables.
+- **`min_lon`**: Minimum longitude (in decimal degrees) of bounding box for Daymet data download. Default is to infer bounding box from address coordinates.
+- **`max_lon`**: Maximum longitude (in decimal degrees) of bounding box for Daymet data download. Default is to infer bounding box from address coordinates.
+- **`min_lat`**: Minimum latitude (in decimal degrees) of bounding box for Daymet data download. Default is to infer bounding box from address coordinates.
+- **`max_lat`**: Maximum latitude (in decimal degrees) of bounding box for Daymet data download. Default is to infer bounding box from address coordinates.
+- **`region`**: Daymet spatial region: "na" for continental North America, "hi" for Hawaii, or "pr" for Puerto Rico (quotes are optional). Default is continental North America.
 
 An example DeGAUSS command with all optional arguments used would be:
 
@@ -54,7 +54,7 @@ Daymet data on a specified date is linked to coordinate data within the `my_addr
 
 ## Geomarker Data
 
-- Environmental data is downloaded from [Daymet](https://daymet.ornl.gov/).
+- Environmental data is downloaded from [Daymet](https://daymet.ornl.gov/) as netCDF file(s) using the [daymetr package](https://github.com/bluegreen-labs/daymetr).
 - The R code that links the environmental data to the input coordinates is within `entrypoint.R`.
 
 ## Warning
