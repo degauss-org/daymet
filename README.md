@@ -8,7 +8,7 @@
 If `loyalty_degauss.csv` is a file in the current working directory with coordinate columns named `lat` and `lon`, then the [DeGAUSS command](https://degauss.org/using_degauss.html#DeGAUSS_Commands):
 
 ```sh
-docker run --rm -v $PWD:/tmp ghcr.io/degauss-org/daymet:0.1.0 my_address_file_geocoded.csv
+docker run --rm -v $PWD:/tmp ghcr.io/degauss-org/daymet:0.1.0 loyalty_degauss.csv
 ```
 
 will produce `loyalty_degauss_daymet_0.1.0.csv` with added columns:
@@ -21,7 +21,7 @@ will produce `loyalty_degauss_daymet_0.1.0.csv` with added columns:
 - **`prcp`**: precipitation
 - **`dayl`**: day length
 
-### Optional Argument
+### Optional Arguments
 
 - Optional arguments include:
 - **`vars`**: daymet variables (any of: <tmax, tmin, srad, vp, swe, prcp, dayl> separated by comma)
