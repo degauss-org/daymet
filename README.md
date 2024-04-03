@@ -46,12 +46,12 @@ An example DeGAUSS command with all optional arguments used would be:
 docker run --rm -v $PWD:/tmp ghcr.io/degauss-org/daymet:0.1.0 my_addresses.csv tmax,vp,prcp -88.263390 -87.525706 41.470117 42.154247 na
 ```
 
-which will return maximum temperature, vapor pressure, and precipitation for observations within a bounding box of Cook County, IL. It is important to specify bounding box coordinates in the order of: `min_lon`, `max_lon`, `min_lat`, `max_lat`.
+which will return maximum temperature, vapor pressure, and precipitation for observations within a boundary box of Cook County, IL. It is important to specify bounding box coordinates in the order of: `min_lon`, `max_lon`, `min_lat`, `max_lat`.
 
 ## Geomarker Methods
 
 Daymet data on a specified date is linked to coordinate data within the `my_addresses.csv` file by matching on the Daymet 1 km x 1 km raster cell number.
-If boundary box coordinate data is not supplied in the optional arguments, they will be inferred from the .csv file with an added 0.1 degree latitude and longitude buffer to the outermost points to enhance data privacy.
+If the boundary box coordinate data is not supplied in the optional arguments, they will be inferred from the .csv file with an added 0.1 degree latitude and longitude buffer to the outermost points to enhance data privacy.
 
 ## Geomarker Data
 
@@ -60,7 +60,7 @@ If boundary box coordinate data is not supplied in the optional arguments, they 
 
 ## Warning
 
-If the bounding box for Daymet data download is inferred from address coordinates, then the size of the Daymet data download may be quite large if the address coordinates are very spread out. If a wide spread of coordinates is desired, then it may be best to stratify your input dataset to coordinates within separate geographic regions.
+If the boundary box for Daymet data download is inferred from address coordinates, then the size of the Daymet data download may be quite large if the address coordinates are very spread out. If a wide spread of coordinates is desired, then it may be best to stratify your input dataset to coordinates within separate geographic regions.
 
 ## DeGAUSS Details
 
