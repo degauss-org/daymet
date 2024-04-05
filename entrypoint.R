@@ -143,7 +143,7 @@ import_data <- function(.csv_filename = opt$filename, .min_lon = min_lon, .max_l
 # Creating function to load the Daymet NetCDF data
 daymet_load <- function() {
   # Loading the NetCDF files downloaded from Daymet as a SpatRaster raster stack
-  netcdf_list <- list.files(pattern = "_ncss.nc$")
+  netcdf_list <- list.files(path = "app", pattern = "_ncss.nc$")
   # Initializing a time dictionary
   time_dict <- tibble(number = 1:365)
   for (i in 1:length(netcdf_list)) {
