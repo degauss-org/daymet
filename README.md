@@ -31,6 +31,7 @@ will produce `my_addresses_daymet.csv` with added columns:
 
 Other columns may be present in the input `my_addresses.csv` file, and these other columns will be linked in and included in the output `my_addresses_daymet.csv` file.
 
+
 ### Optional Arguments
 
 - **`vars`**: Comma-separated string of Daymet variables: Any combination of "tmax,tmin,srad,vp,swe,prcp,dayl" (quotes are optional). Default is to download and link all Daymet variables.
