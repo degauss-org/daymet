@@ -4,7 +4,7 @@
 
 dht::greeting()
 
-## load libraries without messages or warnings
+# load libraries without messages or warnings
 
 withr::with_message_sink("/dev/null", library(daymetr))
 withr::with_message_sink("/dev/null", library(tidyverse))
