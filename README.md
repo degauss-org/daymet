@@ -16,10 +16,10 @@ Note: The Daymet calendar is based on a standard calendar year. All Daymet years
 If `my_addresses.csv` is a file in the current working directory with ID column `id`, start and end date columns `start_date` and `end_date`, and coordinate columns named `lat` and `lon`, then the [DeGAUSS command](https://degauss.org/using_degauss.html#DeGAUSS_Commands):
 
 ```sh
-docker run --rm -v $PWD:/tmp ghcr.io/degauss-org/daymet:0.1.0 my_addresses.csv
+docker run --rm -v $PWD:/tmp ghcr.io/degauss-org/daymet:0.1.2 my_addresses.csv
 ```
 
-will produce `my_addresses_daymet_0.1.0.csv` with added columns:
+will produce `my_addresses_daymet.csv` with added columns:
 
 - **`tmax`**: maximum temperature
 - **`tmin`**: minimum temperature
@@ -29,7 +29,7 @@ will produce `my_addresses_daymet_0.1.0.csv` with added columns:
 - **`prcp`**: precipitation
 - **`dayl`**: day length
 
-Other columns may be present in the input `my_addresses.csv` file, and these other columns will be linked in and included in the output `my_addresses_daymet_0.1.0.csv` file.
+Other columns may be present in the input `my_addresses.csv` file, and these other columns will be linked in and included in the output `my_addresses_daymet.csv` file.
 
 ### Optional Arguments
 
@@ -43,14 +43,15 @@ Other columns may be present in the input `my_addresses.csv` file, and these oth
 An example DeGAUSS command with all optional arguments used would be:
 
 ```sh
-docker run --rm -v $PWD:/tmp ghcr.io/degauss-org/daymet:0.1.0 my_addresses.csv tmax,vp,prcp -88.263390 -87.525706 41.470117 42.154247 na
+docker run --rm -v $PWD:/tmp ghcr.io/degauss-org/daymet:0.1.2 my_addresses.csv tmax,vp,prcp -88.263390 -87.525706 41.470117 42.154247 na
 ```
 
-which will return maximum temperature, vapor pressure, and precipitation for observations within a bounding box of Cook County, IL. It is important to specify bounding box coordinates in the order of: `min_lon`, `max_lon`, `min_lat`, `max_lat`.
+which will return maximum temperature, vapor pressure, and precipitation for observations within a boundary box of Cook County, IL. It is important to specify bounding box coordinates in the order of: `min_lon`, `max_lon`, `min_lat`, `max_lat`.
 
 ## Geomarker Methods
 
 Daymet data on a specified date is linked to coordinate data within the `my_addresses.csv` file by matching on the Daymet 1 km x 1 km raster cell number.
+If the boundary box coordinate data is not supplied in the optional arguments, they will be inferred from the .csv file with an added 0.1 degree latitude and longitude buffer to the outermost points to enhance data privacy.
 
 ## Geomarker Data
 
@@ -59,9 +60,9 @@ Daymet data on a specified date is linked to coordinate data within the `my_addr
 
 ## Warning
 
-If the bounding box for Daymet data download is inferred from address coordinates, then the size of the Daymet data download may be quite large if the address coordinates are very spread out. If a wide spread of coordinates is desired, then it may be best to stratify your input dataset to coordinates within separate geographic regions.
+If the boundary box for Daymet data download is inferred from address coordinates, then the size of the Daymet data download may be quite large if the address coordinates are very spread out. If a wide spread of coordinates is desired, then it may be best to stratify your input dataset to coordinates within separate geographic regions.
 
 ## DeGAUSS Details
 
-The Daymet DeGAUSS package was created by Ben Barrett and Peter Graffy.
+The Daymet DeGAUSS package was created by Ben Barrett and Peter Graffy, with contributions from Erika Rasnick and Luke Rasmussen.
 For detailed documentation on DeGAUSS, including general usage and installation, please see the [DeGAUSS homepage](https://degauss.org).
