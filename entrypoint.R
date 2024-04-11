@@ -4,7 +4,7 @@
 
 dht::greeting()
 
-## load libraries without messages or warnings
+# load libraries without messages or warnings
 
 withr::with_message_sink("/dev/null", library(daymetr))
 withr::with_message_sink("/dev/null", library(tidyverse))
@@ -90,7 +90,7 @@ import_data <- function(.csv_filename = opt$filename, .min_lon = opt$min_lon, .m
     stop(call. = FALSE, 'Input file must be a CSV.')
   }
   # Reading in the input data
-  input_data <- fread(.csv_filename, header = TRUE, sep = ",")
+  input_data <- fread(.csv_filename, header = TRUE, sep = ",", colClasses = c(start_date = "character", end_date = "character"))
   input_data <- as_tibble(input_data)
   # Creating a row_index variable in the input data that is just the row number
   input_data <- input_data %>%
