@@ -3,7 +3,7 @@ FROM rocker/r-ver:4.3.0
 
 # DeGAUSS container metadata
  ENV degauss_name="daymet"
- ENV degauss_version="0.1.3"
+ ENV degauss_version="0.1.4"
  ENV degauss_description="daymet climate variables"
  ENV degauss_argument="short description of optional argument [default: 'insert_default_value_here']"
 
@@ -19,7 +19,8 @@ WORKDIR /app
  RUN apt-get install libxml2-dev zlib1g-dev libfontconfig1-dev libssl-dev libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev libudunits2-dev cmake libnetcdf-dev libgdal-dev libgeos-dev libproj-dev libsqlite0-dev -y
 
 # Install R dependencies
- RUN R -e "install.packages(c('daymetr', 'tidyverse', 'terra', 'gtools', 'data.table', 'remotes', 'withr'))"
+ RUN R -e "install.packages(c('tidyverse', 'terra', 'gtools', 'data.table', 'remotes', 'withr'))"
+ RUN R --quiet -e "remotes::install_github('bluegreen-labs/daymetr')"
  RUN R --quiet -e "remotes::install_github('degauss-org/dht')"
 
 COPY entrypoint.R .

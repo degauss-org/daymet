@@ -15,61 +15,95 @@ withr::with_message_sink("/dev/null", library(dht))
 
 doc <- '
       Usage:
-      entrypoint.R <filename> [<vars>] [<min_lon>] [<max_lon>] [<min_lat>] [<max_lat>] [<region>]
+      entrypoint.R <filename> [--vars=<vars>] [--min_lon=<min_lon>] [--max_lon=<max_lon>] [--min_lat=<min_lat>] [--max_lat=<max_lat>] [--region=<region>]
       entrypoint.R (-h | --help)
 
       Options:
-      -h --help   Show this screen
-      filename  name of csv file
-      vars    tmax, tmin, srad, vp, swe, prcp, dayl, or capricorn (see readme for more info)
-      min_lon minimum longitude
-      max_lon maximum longitude
-      min_lat minimum latitude
-      max_lat maximum latitude
-      region  daymet region
+      -h --help  Show this screen
+      filename  Name of CSV file
+      --vars=<vars>  Daymet variables (see readme for more info) [default: tmax, tmin, srad, vp, swe, prcp, dayl]
+      --min_lon=<min_lon>  Minimum longitude [default: 0]
+      --max_lon=<max_lon>  Maximum longitude [default: 0]
+      --min_lat=<min_lat>  Minimum latitude [default: 0]
+      --max_lat=<max_lat>  Maximum latitude [default: 0]
+      --region=<region>  Daymet region [default: na]
       '
 opt <- docopt::docopt(doc)
 
-if (is.null(opt$vars)) {
-  opt$vars <- "tmax, tmin, srad, vp, swe, prcp, dayl"
-  cli::cli_alert_warning("Blank argument for Daymet variable selection. Will return all Daymet variables. Please see {.url https://degauss.org/daymet/} for more information.")
+if (opt$vars == "tmax, tmin, srad, vp, swe, prcp, dayl") {
+  cli::cli_alert_warning("Blank or default argument for Daymet variable selection. Will return all Daymet variables. Please see {.url https://degauss.org/daymet/} for more information.")
 }
 
-day_var <- str_remove_all(opt$vars, " ") 
+day_var <- str_remove_all(opt$vars, " ")
 day_var <- str_split(day_var, ",", simplify = TRUE)
 if (! all(day_var %in% c("tmax", "tmin", "srad", "vp", "swe", "prcp", "dayl", "capricorn"))) {
   opt$vars <- "tmax, tmin, srad, vp, swe, prcp, dayl"
   cli::cli_alert_warning("Invalid argument for Daymet variable selection. Will return all Daymet variables. Please see {.url https://degauss.org/daymet/} for more information.")
 }
 
-if (is.null(opt$min_lon)) {
+if (opt$min_lon == "0") {
   opt$min_lon <- 0
-  cli::cli_alert_warning("Blank argument for minimum longitude. Will use minimum longitude coordinates from address file. Please see {.url https://degauss.org/daymet/} for more information.")
+  cli::cli_alert_warning("Blank or default argument for minimum longitude. Will use minimum longitude coordinates from address file. Please see {.url https://degauss.org/daymet/} for more information.")
+} else {
+  tryCatch({
+    opt$min_lon <- as.numeric(opt$min_lon)
+  }, error = function(e) {
+    print(e)
+    stop(call. = FALSE, 'Please ensure that user-supplied Daymet bounding box has coordinates in numeric decimal degrees.')
+  }, warning = function(w) {
+    stop(call. = FALSE, 'Please ensure that user-supplied Daymet bounding box has coordinates in numeric decimal degrees.')
+  })
 }
 
-if (is.null(opt$max_lon)) {
+if (opt$max_lon == "0") {
   opt$max_lon <- 0
-  cli::cli_alert_warning("Blank argument for maximum longitude. Will use maximum longitude coordinates from address file. Please see {.url https://degauss.org/daymet/} for more information.")
+  cli::cli_alert_warning("Blank or default argument for maximum longitude. Will use maximum longitude coordinates from address file. Please see {.url https://degauss.org/daymet/} for more information.")
+} else {
+  tryCatch({
+    opt$max_lon <- as.numeric(opt$max_lon)
+  }, error = function(e) {
+    print(e)
+    stop(call. = FALSE, 'Please ensure that user-supplied Daymet bounding box has coordinates in numeric decimal degrees.')
+  }, warning = function(w) {
+    stop(call. = FALSE, 'Please ensure that user-supplied Daymet bounding box has coordinates in numeric decimal degrees.')
+  })
 }
 
-if (is.null(opt$min_lat)) {
+if (opt$min_lat == "0") {
   opt$min_lat <- 0
-  cli::cli_alert_warning("Blank argument for minimum latitude. Will use minimum latitude coordinates from address file. Please see {.url https://degauss.org/daymet/} for more information.")
+  cli::cli_alert_warning("Blank or default argument for minimum latitude. Will use minimum latitude coordinates from address file. Please see {.url https://degauss.org/daymet/} for more information.")
+} else {
+  tryCatch({
+    opt$min_lat <- as.numeric(opt$min_lat)
+  }, error = function(e) {
+    print(e)
+    stop(call. = FALSE, 'Please ensure that user-supplied Daymet bounding box has coordinates in numeric decimal degrees.')
+  }, warning = function(w) {
+    stop(call. = FALSE, 'Please ensure that user-supplied Daymet bounding box has coordinates in numeric decimal degrees.')
+  })
 }
 
-if (is.null(opt$max_lat)) {
+if (opt$max_lat == "0") {
   opt$max_lat <- 0
-  cli::cli_alert_warning("Blank argument for maximum latitude. Will use maximum latitude coordinates from address file. Please see {.url https://degauss.org/daymet/} for more information.")
+  cli::cli_alert_warning("Blank or default argument for maximum latitude. Will use maximum latitude coordinates from address file. Please see {.url https://degauss.org/daymet/} for more information.")
+} else {
+  tryCatch({
+    opt$max_lat <- as.numeric(opt$max_lat)
+  }, error = function(e) {
+    print(e)
+    stop(call. = FALSE, 'Please ensure that user-supplied Daymet bounding box has coordinates in numeric decimal degrees.')
+  }, warning = function(w) {
+    stop(call. = FALSE, 'Please ensure that user-supplied Daymet bounding box has coordinates in numeric decimal degrees.')
+  })
 }
 
-if (is.null(opt$region)) {
-  opt$region <- "na"
-  cli::cli_alert_warning("Blank argument for region. Will use North America as default. Please see {.url https://degauss.org/daymet/} for more information.")
+if (opt$region == "na") {
+  cli::cli_alert_warning("Blank or default argument for region. Will use North America. Please see {.url https://degauss.org/daymet/} for more information.")
 }
 
 if (! opt$region %in% c("na", "hi", "pr")) {
   opt$region <- "na"
-  cli::cli_alert_warning("Invalid argument for Daymet region. Will use North America as default. Please see {.url https://degauss.org/daymet/} for more information.")
+  cli::cli_alert_warning("Invalid argument for Daymet region. Will use North America. Please see {.url https://degauss.org/daymet/} for more information.")
 }
 
 if (opt$vars %in% c("capricorn")) {
@@ -351,6 +385,11 @@ addresses$date <- if_else(leap_year(addresses$date) & month(addresses$date) == 1
 daymet_data_dt <- as.data.frame(daymet_data, cells = TRUE)
 daymet_data_dt <- as.data.table(daymet_data_dt)
 rm(daymet_data)
+
+# Subsetting the Daymet data table to only the cell numbers that matched the input address coordinates
+addresses_cells <- unique(addresses$cell)
+daymet_data_dt <- setDT(daymet_data_dt, key = 'cell')[J(addresses_cells)]
+rm(addresses_cells)
 
 # Transposing the Daymet data table, one Daymet variable at a time
 transpose_daymet <- function(.daymet_data_dt = daymet_data_dt, dm_var) {
