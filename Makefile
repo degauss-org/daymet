@@ -4,7 +4,7 @@ build:
 	docker build -t daymet .
 
 test:
-	docker run --rm -v $PWD:/tmp ghcr.io/degauss-org/daymet:0.1.4 loyalty_degauss.csv --vars=tmax
+	docker run --rm -v "${PWD}":/tmp daymet loyalty_degauss.csv
 
 shell:
 	docker run --rm -it --entrypoint=/bin/bash -v "${PWD}":/tmp daymet
