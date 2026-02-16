@@ -1,0 +1,5 @@
+https://data.ornldaac.earthdata.nasa.gov/protected/daymet/Daymet_Daily_V4R1/data/daymet_v4_daily_na_tmax_2023.nc
+https://data.ornldaac.earthdata.nasa.gov/protected/daymet/Daymet_Daily_V4R1/data/daymet_v4_daily_na_tmax_2023.nc
+https://data.ornldaac.earthdata.nasa.gov/protected/daymet/Daymet_xval_V4R1/data/daymet_v4_stnxval_prcp_na_2023.nc
+https://data.ornldaac.earthdata.nasa.gov/protected/daymet/Daymet_xval_V4R1/data/daymet_v4_stnxval_tmax_na_2023.nc
+https://data.ornldaac.earthdata.nasa.gov/protected/daymet/Daymet_xval_V4R1/data/daymet_v4_stnxval_tmin_na_2023.nc
