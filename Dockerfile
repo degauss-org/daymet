@@ -3,8 +3,8 @@ FROM rocker/r-ver:4.3.0
 
 # DeGAUSS container metadata
  ENV degauss_name="daymet"
- ENV degauss_version="0.1.4"
- ENV degauss_description="daymet climate variables"
+ ENV degauss_version="1.0.0"
+ ENV degauss_description="daymet weather variables"
  ENV degauss_argument="short description of optional argument [default: 'insert_default_value_here']"
 
 # add OCI labels based on environment variables too
@@ -20,7 +20,6 @@ WORKDIR /app
 
 # Install R dependencies
  RUN R -e "install.packages(c('tidyverse', 'terra', 'gtools', 'data.table', 'remotes', 'withr'))"
- RUN R --quiet -e "remotes::install_github('bluegreen-labs/daymetr')"
  RUN R --quiet -e "remotes::install_github('degauss-org/dht')"
 
 COPY entrypoint.R .
@@ -28,4 +27,3 @@ COPY entrypoint.R .
 WORKDIR /tmp
 
 ENTRYPOINT ["/usr/local/bin/Rscript", "/app/entrypoint.R"]
-

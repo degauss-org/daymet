@@ -4,7 +4,7 @@ build:
 	docker build -t daymet .
 
 test:
-	docker run --rm -v "${PWD}":/tmp daymet loyalty_degauss.csv
+	docker run --rm -v "${PWD}":/tmp daymet daymet_degauss_test.csv
 
 shell:
 	docker run --rm -it --entrypoint=/bin/bash -v "${PWD}":/tmp daymet
